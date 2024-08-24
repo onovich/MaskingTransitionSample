@@ -5,7 +5,8 @@ Shader "Unlit/Shader_Sample"
         _MainTex ("Texture", 2D) = "white" {}
         _DissolveTex ("Overlay Texture", 2D) = "white" {}
         [Space(20)][Header(Timer)]
-        _T ("T", Range(0, 1)) = 0.0
+        _T ("T", Range(0, 2)) = 0.0
+        // T 的实际取值范围应该是 [0, 1 + Smooth]
         [Space(20)][Header(Smooth)]
         _SmoothFactor ("Smooth Factor", Range(0, 1)) = 0.02
     }
@@ -50,26 +51,14 @@ Shader "Unlit/Shader_Sample"
                 return o;
             }
 
-            // inline fixed4 GetDissolvedColor(v2f i){
-            //     float textureV = tex2D(_DissolveTex, i.uv).r;
-            //     fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
-
-            //     if(_T > textureV)
-            //     {
-            //         baseColor.a = 0.0;  // 透明度设置为0
-            //     }
-
-            //     return baseColor;
-            // }
-
             inline fixed4 GetDissolvedColor(v2f i){
                 float textureV = tex2D(_DissolveTex, i.uv).r;
                 fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
-                
-                // 添加平滑过渡，抗锯齿
-                float edgeBlend = smoothstep(_T - _SmoothFactor, _T + _SmoothFactor, textureV);
             
-                baseColor.a *= edgeBlend;  // 通过平滑过渡控制透明度
+                // 使用 lerp 进行线性插值
+                float edgeBlend = lerp(1.0, 0.0, saturate((_T - textureV) / _SmoothFactor));
+            
+                baseColor.a *= edgeBlend;  // 通过线性插值控制透明度
             
                 return baseColor;
             }

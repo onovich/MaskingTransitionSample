@@ -38,9 +38,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Amplitude: 0.5
+    - _AntialiasingStrength: 0.5
     - _CurrentTime: 3.14
+    - _DissolveAmount: 0
     - _FadeTime: 2
+    - _SmoothFactor: 0.279
     - _Speed: 1
-    - _T: 0.114
-    m_Colors: []
+    - _T: 0.49
+    m_Colors:
+    - _DissolveColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
