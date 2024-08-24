@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Sample_1
+  m_Name: Mat_Sample_4
   m_Shader: {fileID: 4800000, guid: 3b1fa7ab3d6b84d0683bcdbc78cca0d1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 83c205f38fbce4faeacb1b64ab6f9a32, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6773263caa3744fbda15749fca113f21, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SecondaryTex:
-        m_Texture: {fileID: 2800000, guid: 83c205f38fbce4faeacb1b64ab6f9a32, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7a176c5c57f084e5ea548ae02feddef5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -40,7 +40,8 @@ Material:
     - _Amplitude: 0.5
     - _CurrentTime: 3.14
     - _FadeTime: 2
+    - _SmoothFactor: 0.211
     - _Speed: 1
-    - _T: 0.165
+    - _T: 1
     m_Colors: []
   m_BuildTextureStacks: []

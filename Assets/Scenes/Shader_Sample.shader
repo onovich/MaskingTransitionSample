@@ -6,12 +6,17 @@ Shader "Unlit/Shader_Sample"
         _DissolveTex ("Overlay Texture", 2D) = "white" {}
         [Space(20)][Header(Timer)]
         _T ("T", Range(0, 1)) = 0.0
+        [Space(20)][Header(Smooth)]
+        _SmoothFactor ("Smooth Factor", Range(0, 1)) = 0.02
     }
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" }
         LOD 100
+
+        // 设置透明混合模式
+        Blend SrcAlpha OneMinusSrcAlpha 
 
         Pass
         {
@@ -23,6 +28,7 @@ Shader "Unlit/Shader_Sample"
             sampler2D _MainTex;
             sampler2D _DissolveTex;
             float _T;
+            float _SmoothFactor;
 
             struct appdata_t
             {
@@ -44,19 +50,34 @@ Shader "Unlit/Shader_Sample"
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                float fade = min(_T / 1.0, 1.0);  // 计算渐变系数，最大值为1
+            // inline fixed4 GetDissolvedColor(v2f i){
+            //     float textureV = tex2D(_DissolveTex, i.uv).r;
+            //     fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
+
+            //     if(_T > textureV)
+            //     {
+            //         baseColor.a = 0.0;  // 透明度设置为0
+            //     }
+
+            //     return baseColor;
+            // }
+
+            inline fixed4 GetDissolvedColor(v2f i){
                 float textureV = tex2D(_DissolveTex, i.uv).r;
                 fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
+                
+                // 添加平滑过渡，抗锯齿
+                float edgeBlend = smoothstep(_T - _SmoothFactor, _T + _SmoothFactor, textureV);
+            
+                baseColor.a *= edgeBlend;  // 通过平滑过渡控制透明度
+            
+                return baseColor;
+            }
 
-                if(fade>textureV)
-                {
-                    // baseColor = float4(1,1,1,1);
-                    // return baseColor;
-                    discard;  
-                }
-                return tex2D(_MainTex, i.uv);
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 c = GetDissolvedColor(i);
+                return c;
             }
             ENDCG
         }
