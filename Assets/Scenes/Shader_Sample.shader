@@ -3,7 +3,7 @@ Shader "Unlit/Shader_Sample"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _SecondaryTex ("Overlay Texture", 2D) = "white" {}
+        _DissolveTex ("Overlay Texture", 2D) = "white" {}
         [Space(20)][Header(Timer)]
         _T ("T", Range(0, 1)) = 0.0
     }
@@ -21,7 +21,7 @@ Shader "Unlit/Shader_Sample"
             #include "UnityCG.cginc"
             
             sampler2D _MainTex;
-            sampler2D _SecondaryTex;
+            sampler2D _DissolveTex;
             float _T;
 
             struct appdata_t
@@ -47,7 +47,7 @@ Shader "Unlit/Shader_Sample"
             fixed4 frag (v2f i) : SV_Target
             {
                 float fade = min(_T / 1.0, 1.0);  // 计算渐变系数，最大值为1
-                float textureV = tex2D(_SecondaryTex, i.uv).r;
+                float textureV = tex2D(_DissolveTex, i.uv).r;
                 fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
 
                 if(fade>textureV)
