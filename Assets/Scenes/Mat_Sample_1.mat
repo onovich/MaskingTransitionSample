@@ -40,8 +40,8 @@ Material:
     - _Amplitude: 0.5
     - _CurrentTime: 3.14
     - _FadeTime: 2
-    - _SmoothFactor: 0.148
+    - _SmoothFactor: 0.404
     - _Speed: 1
-    - _T: 0.32
+    - _T: -1
     m_Colors: []
   m_BuildTextureStacks: []

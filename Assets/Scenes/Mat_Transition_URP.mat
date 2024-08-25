@@ -66,7 +66,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cutoff: 1
+    - _Cutoff: -0.62
     - _EdgeSmoothing: 2
     - _QueueControl: 0
     - _QueueOffset: 0
