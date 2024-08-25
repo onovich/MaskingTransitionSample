@@ -2,6 +2,7 @@ Shader "Unlit/Shader_Sample"
 {
     Properties
     {
+        _MainColor ("Main Color", Color) = (1,1,1,1)
         _MainTex ("Texture", 2D) = "white" {}
         _DissolveTex ("Overlay Texture", 2D) = "white" {}
         [Space(20)][Header(Timer)]
@@ -30,6 +31,7 @@ Shader "Unlit/Shader_Sample"
             sampler2D _DissolveTex;
             float _T;
             float _SmoothFactor;
+            fixed4 _MainColor;
 
             struct appdata_t
             {
@@ -53,7 +55,7 @@ Shader "Unlit/Shader_Sample"
 
             inline fixed4 GetDissolvedColor(v2f i){
                 float textureV = tex2D(_DissolveTex, i.uv).r;
-                fixed4 baseColor = tex2D(_MainTex, i.uv);  // 获取原图颜色
+                fixed4 baseColor = tex2D(_MainTex, i.uv) * _MainColor;
 
                 // 使用 SmoothStep 进行平滑过渡
                 float edgeBlend = smoothstep(_T, _T + _SmoothFactor, textureV);
